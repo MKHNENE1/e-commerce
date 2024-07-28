@@ -1,0 +1,76 @@
+<div class="mx-4 my-5">
+  <div class="row g-5 px-5 w-100">
+    <div
+      class="d-flex flex-column gap-4 bg-light justify-content-center w-50 p-5 col-md-4"
+    >
+      <div class="d-flex justify-content-center">
+        <img
+          [src]="productDetails.images[0]"
+          class="img-fluid rounded-start"
+          alt="Product Image"
+          style="height: 300px"
+        />
+      </div>
+      <div class="d-flex gap-2">
+        <div class="bg-dark-subtle">
+          <img
+            src="{{ productDetails.thumbnail }}"
+            alt="Product Thumbnail"
+            style="width: 70px; height: 70px; cursor: pointer"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8 w-50">
+      <div class="card-body">
+        <h2 class="card-title">{{ productDetails.title }}</h2>
+        <p class="card-text my-3">{{ productDetails.description }}</p>
+        <div class="star-rating mb-3">
+          <i *ngFor="let star of fullStars" class="fa fa-star text-success"></i>
+          <i *ngIf="halfStar" class="fa fa-star-half-alt text-success"></i>
+          <i *ngFor="let star of emptyStars" class="fa fa-star empty"></i>
+          <span class="ms-2">({{ productDetails.rating }})</span>
+        </div>
+        <div class="fs-4">
+          <span class="text-danger">
+            -{{ productDetails.discountPercentage }}%
+          </span>
+          {{
+            productDetails.price
+              | calculatePrice : productDetails.discountPercentage
+          }}
+          $
+        </div>
+        <div class="fs-5">
+          <span>List Price: </span>
+          <span class="text-decoration-line-through">
+            {{ productDetails.price }} $
+          </span>
+        </div>
+        <div class="">
+          <div
+            class="rounded-5 fs-small text-center text-white bg-success my-3"
+          >
+            {{ productDetails.availabilityStatus }}
+          </div>
+        </div>
+        <p class="mb-1">More Information</p>
+        <div class="d-flex gap-2 mt-0">
+          @for (tag of productDetails.tags; track $index) {
+          <p
+            class="rounded-pill fs-small fs-small text-black bg-dark-subtle text-capitalize text-center"
+          >
+            {{ tag }}
+          </p>
+          }
+        </div>
+        <div class="d-flex gap-2 mt-3">
+          <a href="#" class="btn btn-success rounded-pill">Buy Now</a>
+          <a href="#" class="btn btn-outline-success rounded-pill"
+            >Add to Cart</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

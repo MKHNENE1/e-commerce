@@ -1,0 +1,97 @@
+<form
+  class="w-50 mx-auto my-3 bg-light card p-4 d-flex flex-column justify-content-between"
+  [formGroup]="registerForm"
+  (ngSubmit)="submit()"
+>
+  <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="name"
+      formControlName="name"
+      aria-describedby="emailHelp"
+    />
+    @if (name?.invalid && (name?.dirty || name?.touched)) { @if
+    (name?.hasError("required")) {
+    <div id="nameHelp" class="form-text text-danger">Required</div>
+    } }
+  </div>
+  <div class="mb-3">
+    <label for="email" class="form-label">Email address</label>
+    <input
+      type="email"
+      class="form-control"
+      id="email"
+      formControlName="email"
+      aria-describedby="emailHelp"
+    />
+    @if (email?.invalid && (email?.dirty || email?.touched)) { @if
+    (email?.hasError("required")) {
+    <div id="emailHelp" class="form-text text-danger">Required</div>
+    } @else if (email?.hasError("pattern")) {
+    <div id="emailHelp2" class="form-text text-danger">Email is not valid</div>
+    } }
+  </div>
+  <div class="mb-3">
+    <label for="username" class="form-label">User Name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="username"
+      formControlName="username"
+      aria-describedby="emailHelp"
+    />
+    @if (username?.invalid && (username?.dirty || username?.touched)) { @if
+    (username?.hasError("required")) {
+    <div id="usernameHelp" class="form-text text-danger">Required</div>
+    } @else if (username?.hasError("pattern")) {
+    <div id="usernameHelp2" class="form-text text-danger">
+      Username is not valid
+    </div>
+    } }
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input
+      type="password"
+      formControlName="password"
+      class="form-control"
+      id="password"
+    />
+    @if (password?.invalid && (password?.dirty || password?.touched)) { @if
+    (password?.hasError("required")) {
+    <div id="passwordHelp" class="form-text text-danger">Required</div>
+    } @else if (password?.hasError("pattern")) {
+    <div id="passwordHelp2" class="form-text text-danger">
+      Password is not valid
+    </div>
+    } }
+  </div>
+  <div class="mb-3">
+    <label for="rePassword" class="form-label">Confirm Password</label>
+    <input
+      type="password"
+      formControlName="confirmPassword"
+      class="form-control"
+      id="rePassword"
+    />
+    @if (confirmPassword?.invalid && (confirmPassword?.dirty ||
+    confirmPassword?.touched)) { @if (confirmPassword?.hasError("required")) {
+    <div id="confirmPasswordHelp" class="form-text text-danger">Required</div>
+    } @else if (confirmPassword?.hasError("pattern")) {
+    <div id="confirmPassword2Help" class="form-text text-danger">
+      Password is not Identical
+    </div>
+    } }
+  </div>
+  <button type="submit" class="btn btn-primary m-auto mt-1 px-sm-5">
+    Submit
+  </button>
+</form>
+<div class="mt-4">
+  <p class="text-center fw-bold">
+    Already have an account !
+    <a class="text-black" routerLink="/login">Login</a>
+  </p>
+</div>

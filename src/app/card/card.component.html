@@ -1,0 +1,48 @@
+<div class="col">
+  <a [routerLink]="['/product-details', cardData.id]" class="parentElement">
+    <div class="card bg-light h-100 d-flex">
+      <div class="w-100">
+        @if(cardData.availabilityStatus == "In Stock"){
+        <div class="rounded-5 fs-small text-center text-white bg-success m-3">
+          {{ cardData.availabilityStatus }}
+        </div>
+        } @else {
+        <div class="rounded-5 fs-small text-center text-white bg-danger m-3">
+          {{ cardData.availabilityStatus }}
+        </div>
+        }
+        <img
+          [src]="cardData.images[0]"
+          class="card-img-top"
+          style="height: 300px"
+          alt="Product Image"
+        />
+      </div>
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <p class="card-title description fw-bold text-start">
+            {{ cardData.title }}
+          </p>
+          <div class="card-title text-decoration-line-through w-50 text-end">
+            <p class="m-0 p-0">{{ cardData.price }} $</p>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <p class="card-text description">
+            {{ cardData.description }}
+          </p>
+          <p class="m-0 p-0 fw-bold">
+            {{ cardData.price | calculatePrice : cardData.discountPercentage }}
+            $
+          </p>
+        </div>
+        <div class="star-rating mb-3">
+          <i *ngFor="let star of fullStars" class="fa fa-star text-success"></i>
+          <i *ngIf="halfStar" class="fa fa-star-half-alt text-success"></i>
+          <i *ngFor="let star of emptyStars" class="fa fa-star empty"></i>
+        </div>
+        <a href="" class="btn btn-outline-success rounded-pill">Add to Cart</a>
+      </div>
+    </div>
+  </a>
+</div>

@@ -1,0 +1,10 @@
+.star-rating {
+  font-size: 15px;
+}
+.empty {
+  color: #ddd;
+}
+.fs-small {
+  font-size: small;
+  width: 15%;
+}

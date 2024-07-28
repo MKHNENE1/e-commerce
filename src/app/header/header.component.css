@@ -1,0 +1,10 @@
+.curser-pointer {
+  cursor: pointer;
+}
+.fs-small {
+  font-size: 10px;
+}
+.active {
+  font-weight: bold;
+  color: green;
+}

@@ -1,0 +1,42 @@
+<nav class="navbar bg-body-tertiary">
+  <div
+    class="container-fluid mx-3 d-flex justify-content-center justify-content-sm-between align-items-center"
+  >
+    <a class="navbar-brand" routerLink="/">Products App</a>
+    <div class="">
+      <ul class="navbar-nav d-flex flex-row gap-3">
+        <li class="nav-item">
+          <a
+            class="link-underline text-black link-underline-opacity-0"
+            routerLink="/regester"
+            routerLinkActive="active"
+            >Register</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="link-underline text-black link-underline-opacity-0"
+            routerLink="/login"
+            routerLinkActive="active"
+            >Login</a
+          >
+        </li>
+        <li class="nav-item position-relative curser-pointer">
+          <a
+            routerLink="/cart"
+            routerLinkActive="active"
+            class="link-underline text-black link-underline-opacity-0"
+          >
+            <i class="fa-solid fa-cart-shopping curser-pointer"></i>
+          </a>
+          <!-- <span
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary-subtle text-black fs-small"
+          >
+            1
+            <span class="visually-hidden">unread messages</span>
+          </span> -->
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
