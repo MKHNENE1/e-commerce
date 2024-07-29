@@ -1,22 +1,27 @@
 import { Component, Input } from '@angular/core';
-// import * as productData from '../products Data/products.json';
-import { ProductData } from '../interface/product-data';
 import { NgFor, NgIf } from '@angular/common';
 import { CalculatePricePipe } from '../pipe/calculate-price.pipe';
 import { ProductRequestServiceService } from '../services/product-request-service.service';
+import { CartProductsService } from '../services/cart-products.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [NgFor, NgIf, CalculatePricePipe],
+  imports: [NgFor, NgIf, CalculatePricePipe, FormsModule],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css',
 })
 export class ProductDetailsComponent {
-  constructor(private ProductRequestService: ProductRequestServiceService) {}
-  // jsonData: Array<ProductData> = (productData as any).default;
+  constructor(
+    private ProductRequestService: ProductRequestServiceService,
+    private cartData: CartProductsService
+  ) {}
+
   productDetails: any;
   cardData: any;
+  max: any;
+  counter: number = 1;
   fullStars: number[] = [];
   halfStar: boolean = false;
   emptyStars: number[] = [];
@@ -24,8 +29,8 @@ export class ProductDetailsComponent {
   ngOnInit() {
     this.ProductRequestService.getproductDetails(this.id).subscribe((res) => {
       this.productDetails = res;
+      this.max = this.productDetails.stock;
       this.updateStars();
-      console.log(this.productDetails);
     });
   }
   updateStars() {
@@ -35,4 +40,32 @@ export class ProductDetailsComponent {
     this.halfStar = hasHalfStar;
     this.emptyStars = Array(5 - fullStarCount - (hasHalfStar ? 1 : 0)).fill(0);
   }
+  incProduct() {
+    if (this.counter != this.max && this.productDetails.stock != 0) {
+      this.productDetails.stock -= 1;
+      this.counter += 1;
+      if (this.productDetails.stock == 1) {
+        this.productDetails.availabilityStatus = 'Out of Stock';
+      }
+    }
+  }
+  dicProduct() {
+    if (this.counter! > 1) {
+      this.productDetails.stock += 1;
+      this.counter -= 1;
+      if (this.productDetails.stock > 10) {
+        this.productDetails.availabilityStatus = 'In Stock';
+      } else if (this.productDetails.stock <= 10) {
+        this.productDetails.availabilityStatus = 'Low Stock';
+      }
+    }
+  }
+  addToCart(id: number) {
+    this.cartData.addProductToCart({
+      id: id,
+      counter: this.counter,
+      max: this.max,
+    });
+  }
+  buyNow() {}
 }

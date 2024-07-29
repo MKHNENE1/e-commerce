@@ -8,3 +8,6 @@
   font-size: small;
   width: 15%;
 }
+.hplus:hover {
+  background-color: #a9a9a9 !important;
+}
