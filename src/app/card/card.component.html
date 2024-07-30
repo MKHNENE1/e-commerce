@@ -11,12 +11,14 @@
           {{ cardData.availabilityStatus }}
         </div>
         }
-        <img
-          [src]="cardData?.thumbnail"
-          class="img-fluid"
-          style="height: fit-content"
-          alt="Product Image"
-        />
+        <div class="d-flex justify-content-center">
+          <img
+            [src]="cardData?.thumbnail"
+            class="img-fluid"
+            style="height: fit-content"
+            alt="Product Image"
+          />
+        </div>
       </div>
       <div class="card-body">
         <div class="d-flex justify-content-between">

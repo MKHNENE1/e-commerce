@@ -4,6 +4,7 @@ import { CalculatePricePipe } from '../pipe/calculate-price.pipe';
 import { ProductRequestServiceService } from '../services/product-request-service.service';
 import { CartProductsService } from '../services/cart-products.service';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-details',
@@ -13,11 +14,6 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './product-details.component.css',
 })
 export class ProductDetailsComponent {
-  constructor(
-    private ProductRequestService: ProductRequestServiceService,
-    private cartData: CartProductsService
-  ) {}
-
   productDetails: any;
   cardData: any;
   max: any;
@@ -28,6 +24,12 @@ export class ProductDetailsComponent {
   selectedImage: string = '';
   index: number = 0;
   @Input() id: any;
+  constructor(
+    private ProductRequestService: ProductRequestServiceService,
+    private cartData: CartProductsService,
+    private router: Router
+  ) {}
+
   ngOnInit() {
     this.ProductRequestService.getproductDetails(this.id).subscribe((res) => {
       this.productDetails = res;
@@ -70,6 +72,7 @@ export class ProductDetailsComponent {
       counter: this.counter,
       max: this.max,
     });
+    this.router.navigate(['/cart']);
   }
   selectedImages(image: any) {
     this.selectedImage = image;
