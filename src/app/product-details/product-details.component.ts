@@ -25,11 +25,15 @@ export class ProductDetailsComponent {
   fullStars: number[] = [];
   halfStar: boolean = false;
   emptyStars: number[] = [];
+  selectedImage: string = '';
+  index: number = 0;
   @Input() id: any;
   ngOnInit() {
     this.ProductRequestService.getproductDetails(this.id).subscribe((res) => {
       this.productDetails = res;
       this.max = this.productDetails.stock;
+      this.selectedImage = this.productDetails.images[this.index] || '';
+      this.index++;
       this.updateStars();
     });
   }
@@ -67,5 +71,7 @@ export class ProductDetailsComponent {
       max: this.max,
     });
   }
-  buyNow() {}
+  selectedImages(image: any) {
+    this.selectedImage = image;
+  }
 }

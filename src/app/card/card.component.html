@@ -1,7 +1,7 @@
 <div class="col">
   <a [routerLink]="['/product-details', cardData.id]" class="parentElement">
     <div class="card bg-light h-100 d-flex">
-      <div class="w-100">
+      <div class="w-100 bg-light">
         @if(cardData.availabilityStatus == "In Stock"){
         <div class="rounded-5 fs-small text-center text-white bg-success m-3">
           {{ cardData.availabilityStatus }}
@@ -12,9 +12,9 @@
         </div>
         }
         <img
-          [src]="cardData.images[0]"
-          class="card-img-top"
-          style="height: 300px"
+          [src]="cardData?.thumbnail"
+          class="img-fluid"
+          style="height: fit-content"
           alt="Product Image"
         />
       </div>

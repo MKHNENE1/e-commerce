@@ -1,31 +1,39 @@
-<div class="mx-4 my-5">
-  <div class="row g-5 px-5 w-100">
+<div class="mx-4 mt-5 mb-4 d-flex justify-content-center">
+  <div class="row g-5 px-sm-2 px-md-5 px-lg-5 w-100">
     <div
-      class="d-flex flex-column gap-4 bg-light justify-content-center w-50 p-5 col-md-4"
+      class="d-flex flex-column gap-5 bg-light justify-content-center p-2 p-md-3 p-lg-5 col-md-5"
     >
       <div class="d-flex justify-content-center">
         <img
-          [src]="productDetails?.images[0]"
+          [src]="selectedImage || productDetails?.thumbnail"
           class="img-fluid rounded-start"
           alt="Product Image"
           style="height: 300px"
         />
       </div>
       <div class="d-flex gap-2">
-        <div class="bg-dark-subtle">
+        @for (image of productDetails?.images ; track index) {
+        <div
+          class="bg-dark-subtle d-flex justify-content-center"
+          style="width: 70px"
+        >
           <img
-            src="{{ productDetails?.thumbnail }}"
+            [src]="image"
+            [class.selected]="image === selectedImage"
+            (click)="selectedImages(image)"
             alt="Product Thumbnail"
-            style="width: 70px; height: 70px; cursor: pointer"
+            class="img-fluid"
+            style="cursor: pointer; height: 70px"
           />
         </div>
+        }
       </div>
     </div>
-    <div class="col-md-8 w-50">
+    <div class="col-md-7 w-md-50">
       <div class="card-body">
         <h2 class="card-title">{{ productDetails?.title }}</h2>
-        <p class="card-text my-3">{{ productDetails?.description }}</p>
-        <div class="star-rating mb-3">
+        <p class="card-text mt-3 mb-2">{{ productDetails?.description }}</p>
+        <div class="star-rating mb-2">
           <i *ngFor="let star of fullStars" class="fa fa-star text-success"></i>
           <i *ngIf="halfStar" class="fa fa-star-half-alt text-success"></i>
           <i *ngFor="let star of emptyStars" class="fa fa-star empty"></i>
@@ -50,12 +58,16 @@
         <div class="">
           @if(productDetails?.availabilityStatus != "Out of Stock"){
           <div
-            class="rounded-5 fs-small text-center text-white bg-success my-3"
+            class="rounded-5 fs-small text-center text-white bg-success my-3 px-2"
+            style="width: fit-content"
           >
             {{ productDetails?.availabilityStatus }}
           </div>
           }@else {
-          <div class="rounded-5 fs-small text-center text-white bg-danger my-3">
+          <div
+            class="rounded-5 fs-small text-center text-white bg-danger my-3 px-2"
+            style="width: fit-content"
+          >
             {{ productDetails?.availabilityStatus }}
           </div>
           }
@@ -64,14 +76,15 @@
         <div class="d-flex gap-2 mt-0">
           @for (tag of productDetails?.tags; track $index) {
           <p
-            class="rounded-pill fs-small fs-small text-black bg-dark-subtle text-capitalize text-center"
+            class="rounded-pill fs-small fs-small text-black bg-dark-subtle text-capitalize text-center px-2"
+            style="width: fit-content"
           >
             {{ tag }}
           </p>
           }
         </div>
         <div>
-          <ul class="pagination">
+          <ul class="pagination mt-2">
             <li class="page-item">
               <button
                 (click)="incProduct()"
@@ -97,13 +110,11 @@
             </li>
           </ul>
         </div>
-        <div class="d-flex gap-2 mt-3">
-          <button (click)="buyNow()" class="btn btn-success rounded-pill w-25">
-            Buy Now
-          </button>
+        <div class="d-flex flex-column flex-md-row gap-4 mt-4">
+          <button class="btn btn-success rounded-pill">Buy Now</button>
           <button
             (click)="addToCart(productDetails?.id)"
-            class="btn btn-outline-success rounded-pill w-25"
+            class="btn btn-outline-success rounded-pill"
           >
             Add to Cart
           </button>

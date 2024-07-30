@@ -1,81 +1,85 @@
 <div class="container my-5">
   <h2>Cart</h2>
-  <table class="table">
-    <thead>
-      <tr>
-        <th class="col-6 text-center" colspan="2">Description</th>
-        <th class="col-3">Quantity</th>
-        <th>Remove</th>
-        <th>Price</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (item of cartDetails; track item.allData.id) {
-      <tr>
-        <td class="ps-0 py-3 col-2">
-          <img
-            [src]="item.allData?.images[0]"
-            alt="Product Image"
-            class="bg-light"
-            style="width: 200px"
-          />
-        </td>
-        <td class="fs-5 fw-bold align-middle">
-          <div class="">
-            <p class="mb-1">{{ item.allData?.title }}</p>
-            <p class="fw-medium opacity-75 fs-6">
-              {{ item.allData?.description }}
-            </p>
-          </div>
-        </td>
-        <td class="align-middle">
-          <div class="d-flex align-items-center">
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        @if (cartDetails.length>0) {
+        <tr>
+          <th class="col-6 text-center" colspan="2">Description</th>
+          <th class="col-3">Quantity</th>
+          <th>Remove</th>
+          <th>Price</th>
+        </tr>
+        } @else {
+        <tr>
+          <td class="px-0">
+            <div class="alert alert-light mt-3 mb-3 fw-bold">Cart is Empty</div>
+          </td>
+        </tr>
+        }
+      </thead>
+      <tbody>
+        @for (item of cartDetails; track item.allData.id) {
+        <tr>
+          <td class="ps-0 py-3 col-2">
+            <img
+              [src]="item.allData?.images[0]"
+              alt="Product Image"
+              class="bg-light"
+              style="width: 200px"
+            />
+          </td>
+          <td class="fs-5 fw-bold align-middle">
+            <div class="">
+              <p class="mb-1">{{ item.allData?.title }}</p>
+              <p class="fw-medium opacity-75 fs-6">
+                {{ item.allData?.description }}
+              </p>
+            </div>
+          </td>
+          <td class="align-middle">
+            <div class="d-flex align-items-center">
+              <button
+                class="btn btn-lg btn-success rounded-1 fw-bold px-4 py-3"
+                (click)="incProduct(item)"
+              >
+                +
+              </button>
+              <span
+                class="border border-1 border-start-0 border-end-0 border-black px-3 py-3 w-25 text-center bg-white"
+              >
+                {{ item?.controls }}
+              </span>
+              <button
+                class="btn btn-lg rounded-1 btn-outline-dark fw-bold px-4 py-3"
+                (click)="dicProduct(item)"
+              >
+                -
+              </button>
+            </div>
+          </td>
+          <td class="align-middle">
             <button
-              class="btn btn-lg btn-success rounded-1 fw-bold px-4 py-3"
-              (click)="incProduct(item)"
+              class="btn btn-lg btn-outline-dark rounded-1 px-4 py-3 fw-bold"
+              (click)="removeProduct(item.allData.id)"
             >
-              +
+              X
             </button>
-            <span
-              class="border border-1 border-start-0 border-end-0 border-black px-3 py-3 w-25 text-center bg-white"
-            >
-              {{ item?.controls }}
-            </span>
-            <button
-              class="btn btn-lg rounded-1 btn-outline-dark fw-bold px-4 py-3"
-              (click)="dicProduct(item)"
-            >
-              -
-            </button>
-          </div>
-        </td>
-        <td class="align-middle">
-          <button
-            class="btn btn-lg btn-outline-dark rounded-1 px-4 py-3 fw-bold"
-            (click)="removeProduct(item.allData.id)"
-          >
-            X
-          </button>
-        </td>
-        <td class="align-middle fs-5 price">
-          {{
-            calcTotalPrice(
-              item.allData?.price
-                | calculatePrice : item.allData?.discountPercentage,
-              item.controls
-            )
-          }}
-        </td>
-      </tr>
-      } @empty {
-      <tr>
-        <td colspan="5" class="px-0">
-          <div class="alert alert-light mt-3 mb-3 fw-bold">Cart is Empty</div>
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
+          </td>
+          <td class="align-middle fs-5 price">
+            {{
+              calcTotalPrice(
+                item.allData?.price
+                  | calculatePrice : item.allData?.discountPercentage,
+                item.controls
+              )
+            }}
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
   @if (cartDetails.length>0) {
   <div
     class="border border-1 w-25 p-3 d-flex ms-auto justify-content-between px-4"
