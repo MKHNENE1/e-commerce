@@ -1,44 +1,38 @@
 <div class="container my-5">
   <h2>Cart</h2>
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-        @if (cartDetails.length>0) {
-        <tr>
-          <th class="col-6 text-center" colspan="2">Description</th>
-          <th class="col-3">Quantity</th>
-          <th>Remove</th>
-          <th>Price</th>
-        </tr>
-        } @else {
-        <tr>
-          <td class="px-0">
-            <div class="alert alert-light mt-3 mb-3 fw-bold">Cart is Empty</div>
-          </td>
-        </tr>
-        }
-      </thead>
-      <tbody>
-        @for (item of cartDetails; track item.allData.id) {
-        <tr>
-          <td class="ps-0 py-3 col-2">
-            <img
-              [src]="item.allData?.images[0]"
-              alt="Product Image"
-              class="bg-light"
-              style="width: 200px"
-            />
-          </td>
-          <td class="fs-5 fw-bold align-middle">
-            <div class="">
-              <p class="mb-1">{{ item.allData?.title }}</p>
-              <p class="fw-medium opacity-75 fs-6">
-                {{ item.allData?.description }}
-              </p>
-            </div>
-          </td>
-          <td class="align-middle">
-            <div class="d-flex align-items-center">
+  @for (item of cartDetails; track item.allData.id) {
+  <div class="card my-3 mx-auto px-3">
+    <div class="row g-0 align-items-center">
+      <div class="col-md-4 d-flex justify-content-center" style="height: 200px">
+        <img
+          [src]="item.allData?.images[0]"
+          class="img-fluid rounded-start"
+          alt="Product Image"
+        />
+      </div>
+      <div class="col-md-8">
+        <div
+          class="card-body py-4 d-flex flex-column justify-content-between h-100"
+        >
+          <div class="">
+            <h5 class="card-title">{{ item.allData?.title }}</h5>
+            <p class="card-text">{{ item.allData?.description }}</p>
+          </div>
+          <div
+            class="row gap-3 mt-3 mt-md-4 p=3 justify-content-between align-items-center"
+          >
+            <p
+              class="card-text col-sm-4 col-lg-4 d-flex justify-content-start justify-content-md-center align-items-center border border-1 border-black text-center mb-0"
+            >
+              {{
+                calcTotalPrice(
+                  item.allData?.price
+                    | calculatePrice : item.allData?.discountPercentage,
+                  item.controls
+                )
+              }}
+            </p>
+            <div class="d-flex align-items-center col-sm-6 col-lg-4">
               <button
                 class="btn btn-lg btn-success rounded-1 fw-bold px-4 py-3"
                 (click)="incProduct(item)"
@@ -46,7 +40,7 @@
                 +
               </button>
               <span
-                class="border border-1 border-start-0 border-end-0 border-black px-3 py-3 w-25 text-center bg-white"
+                class="border border-1 border-start-0 border-end-0 border-black px-3 py-3 col text-center bg-white"
               >
                 {{ item?.controls }}
               </span>
@@ -57,35 +51,111 @@
                 -
               </button>
             </div>
-          </td>
-          <td class="align-middle">
+
             <button
-              class="btn btn-lg btn-outline-dark rounded-1 px-4 py-3 fw-bold"
+              class="btn btn-lg col-lg-2 btn-outline-danger rounded-1 fw-bold"
               (click)="removeProduct(item.allData.id)"
             >
               X
             </button>
-          </td>
-          <td class="align-middle fs-5 price">
-            {{
-              calcTotalPrice(
-                item.allData?.price
-                  | calculatePrice : item.allData?.discountPercentage,
-                item.controls
-              )
-            }}
-          </td>
-        </tr>
-        }
-      </tbody>
-    </table>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+  }@empty {
+  <div class="alert alert-light mt-3 mb-3 fw-bold">Cart is Empty</div>
+  }
+  <hr />
   @if (cartDetails.length>0) {
   <div
-    class="border border-1 w-25 p-3 d-flex ms-auto justify-content-between px-4"
+    class="border border-1 w-25 p-3 d-flex ms-auto me-5 justify-content-between px-4"
   >
     <p class="mb-0 fw-bold fs-5">total</p>
     <p class="mb-0 fw-bold fs-5">{{ calcPrices() }}</p>
   </div>
   }
 </div>
+
+<!-- /////////////////////////////////////////////////////////////////////////////////////// -->
+
+<!-- <div class="table-responsive">
+  <table class="table">
+    <thead>
+      @if (cartDetails.length>0) {
+      <tr>
+        <th class="col-6 text-center" colspan="2">Description</th>
+        <th class="col-3">Quantity</th>
+        <th>Remove</th>
+        <th>Price</th>
+      </tr>
+      } @else {
+      <tr>
+        <td class="px-0">
+          <div class="alert alert-light mt-3 mb-3 fw-bold">Cart is Empty</div>
+        </td>
+      </tr>
+      }
+    </thead>
+    <tbody>
+      @for (item of cartDetails; track item.allData.id) {
+      <tr>
+        <td class="ps-0 py-3 col-2">
+          <img
+            [src]="item.allData?.images[0]"
+            alt="Product Image"
+            class="bg-light"
+            style="width: 200px"
+          />
+        </td>
+        <td class="fs-5 fw-bold align-middle">
+          <div class="">
+            <p class="mb-1">{{ item.allData?.title }}</p>
+            <p class="fw-medium opacity-75 fs-6">
+              {{ item.allData?.description }}
+            </p>
+          </div>
+        </td>
+        <td class="align-middle">
+          <div class="d-flex align-items-center">
+            <button
+              class="btn btn-lg btn-success rounded-1 fw-bold px-4 py-3"
+              (click)="incProduct(item)"
+            >
+              +
+            </button>
+            <span
+              class="border border-1 border-start-0 border-end-0 border-black px-3 py-3 w-25 text-center bg-white"
+            >
+              {{ item?.controls }}
+            </span>
+            <button
+              class="btn btn-lg rounded-1 btn-outline-dark fw-bold px-4 py-3"
+              (click)="dicProduct(item)"
+            >
+              -
+            </button>
+          </div>
+        </td>
+        <td class="align-middle">
+          <button
+            class="btn btn-lg btn-outline-dark rounded-1 px-4 py-3 fw-bold"
+            (click)="removeProduct(item.allData.id)"
+          >
+            X
+          </button>
+        </td>
+        <td class="align-middle fs-5 price">
+          {{
+            calcTotalPrice(
+              item.allData?.price
+                | calculatePrice : item.allData?.discountPercentage,
+              item.controls
+            )
+          }}
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div> -->
